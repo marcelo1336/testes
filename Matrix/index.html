@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Rain</title>
+</head>
+
+
+<style>
+    /* Retirando bordas  */
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    canvas {
+        display: block;
+    }
+</style>
+
+<body>
+    <canvas id="matrix"></canvas>
+    <script>
+        //Pegar elemento do Canvas
+        // const c = document.getElementById("matrix");
+
+        //Definir o Contexto
+        // const ctx = c.getContext("2d");
+
+        //Testando desenhar um retangulo
+        //ctx.fillRect(0, 0, 100, 100)
+
+        //Preencher toda a tela
+        // c.height = window.innerHeight;
+        // c.width = window.innerWidth;
+
+        // ctx.fillRect(0, 0, c.width, c.height);
+
+
+        //Cor do texto
+        // ctx.fillStyle = "#0F0"
+        //Tamanho e fonte
+        // ctx.font = "60px arial";
+        //Texto na posição x e y
+        // ctx.fillText("Matrix Rain", 0, 60);
+
+
+        // Iniciando o projeto
+
+
+        const c = document.getElementById("matrix");
+
+        const ctx = c.getContext("2d");
+
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+
+        //Simbolos a serem utilizados
+        const letters = ["日", "ﾊ", "ﾐ", "ﾋ", "ｰ", "ｳ", "ｼ", "ﾅ", "ﾓ", "ﾆ", "ｻ", "ﾜ", "ﾂ", "ｵ", "ﾘ", "ｱ", "ﾎ", "ﾃ", "ﾏ", "ｹ", "ﾒ", "ｴ", "ｶ", "ｷ", "ﾑ", "ﾕ", "ﾗ", "ｾ", "ﾈ", "ｽ", "ﾀ", "ﾇ", "ﾍ", ":", "・", ".", "=", "*", "+", "-", "<", ">", "¦", "｜", "ﾘ"];
+
+        const fontSize = 18
+            // Definir total de colunas
+        const columms = c.width / fontSize;
+        // Criando um array para cada queda, posição 1 sempre
+        const drops = new Array(Math.floor(columms)).fill(1);
+
+        function draw() {
+            // preenchendo com opacidade
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, c.width, c.height);
+
+            // cor e estilo da font
+            ctx.fillStyle = "#0F0";
+            ctx.font = `${fontSize}px arial`
+
+            for (let i = 0; i < drops.length; i++) {
+
+                if (drops[i] * fontSize > c.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+
+
+                // letra randomica 
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                // escrevendo na tela
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+
+                drops[i]++;
+            }
+            // chamando recusirvamente uma animação quadro a quadro
+            window.requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+
+</html>
